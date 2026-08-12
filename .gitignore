@@ -1,0 +1,13 @@
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+demo
+benchmark
+tests_runner
+.cache/
+.vscode/
+.idea/
+__pycache__/
