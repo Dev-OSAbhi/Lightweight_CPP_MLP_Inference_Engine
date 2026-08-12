@@ -11,3 +11,13 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 add_compile_options(-Wall -Wextra -Wpedantic)
+
+add_library(mlp_runtime
+    src/model.cpp
+    src/runtime.cpp
+)
+
+target_include_directories(mlp_runtime PUBLIC include)
+
+add_executable(mlp_demo src/demo.cpp)
+target_link_libraries(mlp_demo PRIVATE mlp_runtime)
