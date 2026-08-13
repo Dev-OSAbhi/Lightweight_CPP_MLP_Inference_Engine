@@ -14,6 +14,7 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_library(mlp_runtime
     src/model.cpp
+    src/quantization.cpp
     src/runtime.cpp
 )
 

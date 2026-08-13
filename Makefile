@@ -1,8 +1,8 @@
 CXX ?= g++
 CXXFLAGS ?= -std=c++17 -O3 -Wall -Wextra -Wpedantic -Iinclude
 BUILD_DIR := build
-RUNTIME_SRC := src/model.cpp src/runtime.cpp
-HEADERS := include/mlp/model.hpp include/mlp/runtime.hpp
+RUNTIME_SRC := src/model.cpp src/quantization.cpp src/runtime.cpp
+HEADERS := include/mlp/model.hpp include/mlp/quantization.hpp include/mlp/runtime.hpp
 
 .PHONY: all demo bench test clean
 

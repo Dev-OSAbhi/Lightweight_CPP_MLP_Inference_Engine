@@ -1,4 +1,5 @@
 #include "mlp/model.hpp"
+#include "mlp/quantization.hpp"
 #include "mlp/runtime.hpp"
 
 #include <exception>
@@ -12,18 +13,30 @@ int main(int argc, char** argv) {
 
     try {
         mlp::Model model = mlp::load_model(model_path);
-        mlp::FloatRuntime runtime(std::move(model));
+        mlp::FloatRuntime float_runtime(model);
+        mlp::QuantizedRuntime quantized_runtime(model);
 
         std::vector<float> input{0.6f, -0.3f, 0.8f, 0.2f};
-        std::vector<float> output(static_cast<std::size_t>(runtime.model().output_size()));
+        std::vector<float> float_output(static_cast<std::size_t>(model.output_size()));
+        std::vector<float> quantized_output(static_cast<std::size_t>(model.output_size()));
 
-        runtime.infer(input, output);
+        float_runtime.infer(input, float_output);
+        quantized_runtime.infer(input, quantized_output);
 
         std::cout << "model: " << model_path << '\n';
-        std::cout << "float parameters: " << runtime.model().parameter_count() << '\n';
-        std::cout << "workspace bytes: " << runtime.workspace_bytes() << '\n';
-        std::cout << "output:";
-        for (float value : output) {
+        std::cout << "float parameter bytes: " << model.float_bytes() << '\n';
+        std::cout << "int8 parameter bytes: " << quantized_runtime.model().storage_bytes() << '\n';
+        std::cout << "float workspace bytes: " << float_runtime.workspace_bytes() << '\n';
+        std::cout << "int8 workspace bytes: " << quantized_runtime.workspace_bytes() << '\n';
+
+        std::cout << "float output:";
+        for (float value : float_output) {
+            std::cout << ' ' << std::fixed << std::setprecision(5) << value;
+        }
+        std::cout << '\n';
+
+        std::cout << "int8 output:";
+        for (float value : quantized_output) {
             std::cout << ' ' << std::fixed << std::setprecision(5) << value;
         }
         std::cout << '\n';
