@@ -23,6 +23,9 @@ target_include_directories(mlp_runtime PUBLIC include)
 add_executable(mlp_demo src/demo.cpp)
 target_link_libraries(mlp_demo PRIVATE mlp_runtime)
 
+add_executable(mlp_benchmark src/benchmark.cpp)
+target_link_libraries(mlp_benchmark PRIVATE mlp_runtime)
+
 enable_testing()
 
 add_executable(mlp_tests tests/test_main.cpp)

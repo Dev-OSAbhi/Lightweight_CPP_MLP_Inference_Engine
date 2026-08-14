@@ -16,8 +16,11 @@ $(BUILD_DIR):
 $(BUILD_DIR)/mlp_demo: $(RUNTIME_SRC) src/demo.cpp $(HEADERS) | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(RUNTIME_SRC) src/demo.cpp -o $@
 
-bench:
-	@printf 'Benchmark target will be added with the benchmark executable.\n'
+bench: $(BUILD_DIR)/mlp_benchmark
+	$(BUILD_DIR)/mlp_benchmark
+
+$(BUILD_DIR)/mlp_benchmark: $(RUNTIME_SRC) src/benchmark.cpp $(HEADERS) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(RUNTIME_SRC) src/benchmark.cpp -o $@
 
 test: $(BUILD_DIR)/mlp_tests
 	$(BUILD_DIR)/mlp_tests
