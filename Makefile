@@ -19,8 +19,11 @@ $(BUILD_DIR)/mlp_demo: $(RUNTIME_SRC) src/demo.cpp $(HEADERS) | $(BUILD_DIR)
 bench:
 	@printf 'Benchmark target will be added with the benchmark executable.\n'
 
-test:
-	@printf 'Test target will be added with runtime tests.\n'
+test: $(BUILD_DIR)/mlp_tests
+	$(BUILD_DIR)/mlp_tests
+
+$(BUILD_DIR)/mlp_tests: $(RUNTIME_SRC) tests/test_main.cpp $(HEADERS) | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) $(RUNTIME_SRC) tests/test_main.cpp -o $@
 
 clean:
 	rm -rf $(BUILD_DIR)

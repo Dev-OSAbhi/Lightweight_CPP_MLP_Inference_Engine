@@ -22,3 +22,11 @@ target_include_directories(mlp_runtime PUBLIC include)
 
 add_executable(mlp_demo src/demo.cpp)
 target_link_libraries(mlp_demo PRIVATE mlp_runtime)
+
+enable_testing()
+
+add_executable(mlp_tests tests/test_main.cpp)
+target_link_libraries(mlp_tests PRIVATE mlp_runtime)
+
+add_test(NAME mlp_tests COMMAND mlp_tests)
+set_tests_properties(mlp_tests PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
